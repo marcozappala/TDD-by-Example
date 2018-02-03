@@ -8,8 +8,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class MoneyTest {
 
   @Test
-  public void testDollarMultiplication() {
-    Dollar five = Money.dollar(5);
+  public void testMultiplication() {
+    Money five = Money.dollar(5);
     assertEquals(Money.dollar(10), five.times(2));
     assertEquals(Money.dollar(15), five.times(3));
   }
@@ -19,28 +19,14 @@ public class MoneyTest {
     assertTrue((Money.dollar(5)).equals(Money.dollar(5)));
     assertFalse((Money.dollar(5)).equals(Money.dollar(10)));
     assertTrue((Money.franc(5)).equals(Money.franc(5)));
-    assertFalse((Money.franc(5)).equals(Money.franc(10)));
-    assertFalse((Money.dollar(5)).equals(Money.franc(5)));
   }
 
-  @Test
-  public void testFrancMultiplication() {
-    Franc five = Money.franc(5);
-    assertEquals(Money.franc(10), five.times(2));
-  }
 
   @Test
   public void testCurrency() {
     assertEquals("USD", Money.dollar(1).getCurrency());
     assertEquals("CHF", Money.franc(1).getCurrency());
 
-  }
-
-  @Test
-  public void testDifferentClassEquality() {
-    assertEquals(new Money(5, "CHF"), new Franc(5, "CHF"));
-    assertEquals(new Money(5, "USD"), new Dollar(5, "USD"));
-    assertNotEquals(new Money(5, "USD"), new Franc(5, "CHF"));
   }
 
 }
