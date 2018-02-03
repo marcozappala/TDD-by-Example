@@ -1,4 +1,4 @@
-public class Money {
+public class Money implements Expression {
     protected int amount;
 
     protected String currency;
@@ -20,6 +20,15 @@ public class Money {
         return new Money(amount * multiplier, currency);
     }
 
+    public Expression plus(Money addend) {
+        return new Sum(this, addend);
+    }
+
+    @Override
+    public Money reduce(String toCurrency) {
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Money{" + "amount=" + amount + ", currency='" + currency + '\'' + '}';
@@ -30,7 +39,6 @@ public class Money {
         Money otherMoney = (Money)o;
         return haveEqualsAmounts(otherMoney) && haveEqualsCurrency(otherMoney);
     }
-
     private boolean haveEqualsCurrency(Money otherMoney) {
         return this.currency == otherMoney.currency;
     }
@@ -39,7 +47,8 @@ public class Money {
         return this.amount == otherMoney.amount;
     }
 
-    public String getCurrency() {
+    public String currency() {
         return currency;
     }
+
 }
