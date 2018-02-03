@@ -1,37 +1,45 @@
-public abstract class Money {
-  protected int amount;
-  protected String currency;
+public class Money {
+    protected int amount;
 
-  public Money(int amount, String currency) {
-    this.amount = amount;
-    this.currency = currency;
-  }
+    protected String currency;
 
-  static Dollar dollar(int amount) {
-    return new Dollar(amount, "USD");
-  }
+    public Money(int amount, String currency) {
+        this.amount = amount;
+        this.currency = currency;
+    }
 
-  static Franc franc(int amount) {
-    return new Franc(amount, "CHF");
-  }
+    static Dollar dollar(int amount) {
+        return new Dollar(amount, "USD");
+    }
 
-  abstract Money times(int multiplier);
+    static Franc franc(int amount) {
+        return new Franc(amount, "CHF");
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    Money otherMoney = (Money)o;
-    return haveEqualsAmounts(otherMoney) && haveEqualClasses(otherMoney);
-  }
+    Money times(int multiplier) {
+        return new Money(amount * multiplier, currency);
+    }
 
-  private boolean haveEqualClasses(Money otherMoney) {
-    return this.getClass().equals(otherMoney.getClass());
-  }
+    @Override
+    public String toString() {
+        return "Money{" + "amount=" + amount + ", currency='" + currency + '\'' + '}';
+    }
 
-  private boolean haveEqualsAmounts(Money otherMoney) {
-    return this.amount == otherMoney.amount;
-  }
+    @Override
+    public boolean equals(Object o) {
+        Money otherMoney = (Money)o;
+        return haveEqualsAmounts(otherMoney) && haveEqualsCurrency(otherMoney);
+    }
 
-  public String getCurrency() {
-    return currency;
-  }
+    private boolean haveEqualsCurrency(Money otherMoney) {
+        return this.currency == otherMoney.currency;
+    }
+
+    private boolean haveEqualsAmounts(Money otherMoney) {
+        return this.amount == otherMoney.amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
 }
