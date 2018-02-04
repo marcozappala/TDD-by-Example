@@ -5,7 +5,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MoneyTest {
+public class Tests {
 
     @Test
     public void testMultiplication() {
@@ -61,6 +61,19 @@ public class MoneyTest {
         Bank bank = new Bank();
         Expression reducedMoney = bank.reduce(Money.dollar(1), "USD");
         assertEquals(Money.dollar(1), reducedMoney);
+    }
+
+    @Test
+    public void testReduceMoneyDifferentCurrency() {
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        Expression tenFrancReducedToDollar = bank.reduce(Money.franc(10), "USD");
+        assertEquals(Money.dollar(5), tenFrancReducedToDollar);
+    }
+
+    @Test
+    public void testIdentityRate() {
+        assertEquals(1, new Bank().rate("USD", "USD"));
     }
 
 }
